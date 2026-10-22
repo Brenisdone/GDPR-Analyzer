@@ -1,0 +1,367 @@
+
+/*page layout*/
+div.jump {
+    page-break-before: always;
+}
+
+.landscape {
+    page: landorientation;
+}
+@page landorientation { size: A4 landscape; margin: 2cm; } 
+
+/* GLOBAL */
+html{
+    color: #2c3e50;
+    background-color: rgb(253, 253, 255);
+    font-family: "Montserrat-Regular"
+}
+
+h2{
+    border-bottom: 4px solid #6f77aa;
+    color:#2c3e50;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+h3{
+    color:#2c3e50;;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+.text_center{
+    text-align: center;
+}
+
+/* HEADER */
+.header{
+    margin-bottom: 5rem;
+}
+.header h1{
+    text-transform: uppercase;
+    font-size: 4rem;
+    margin-bottom: 0;
+    font-weight: 900;
+    text-align: left;
+}
+.header_report{
+    margin-top: -10px;
+    font-size: 2.5rem;
+    font-weight: 100;
+    text-align: left;
+    color: #6f77aa;
+}
+.header_target{
+    margin-top:5rem;
+    font-size:1.75rem;
+    text-align: center;
+    font-weight: 600;
+}
+.header_date{
+    font-size:1.5rem;
+    text-align: center;
+    font-weight: 200;
+}
+.header_score{
+    font-size:1.5rem;
+    text-align: center;
+    font-weight: 200;
+}
+.header_score span{
+    display: inline;
+    padding: .2em .6em .3em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    color:#fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
+.logo img{
+    width: 150px;
+    height: 150px;
+}
+.score_part{
+    margin-bottom: 1em;
+}
+
+/* RECAP */
+.section{
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.section_title{
+    vertical-align: middle !important;
+    padding: 0.5rem 0.25rem;
+    height: 3.6rem;
+    background-color: #6f77aa;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    color: #2c3e50;
+}
+.section_cookie, .section_webbeacon, .section_note{
+    line-height: 2.5rem;
+}
+.section_score{
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+.section_note{
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    background-color: #f5f5f5;
+}
+.section_note span{
+    display: block;
+}
+.section_note_title{
+    font-weight: 200;
+}
+.section_note_title{
+    font-size: 0.65em;
+}
+.section_note_data{
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+    /*not analyzed*/
+.notanalyzed{
+    color: #cecece;
+}
+.notanalyzed .section_title{
+    background-color: #f3f3f3;
+    color: #c2c2c2;
+}
+.notanalyzed .section_note{
+    background-color: #fcfcfc;
+}
+
+
+
+
+
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+  
+.flex-container > div {
+    width: 45%;
+    margin: 10px;
+}
+.description, .recomendation{
+    text-align: justify;
+    font-size: 1rem;
+    line-height: 1.5em;
+}
+.bd-callout {
+    line-height: 75px;
+    padding: 0.2rem;
+    margin-top: 0.1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #eee;
+    
+    font-size: 2.2rem;
+    text-align: center;
+
+    border-radius: .25em;
+    color: #fff;
+}
+.green{
+    color:#2ecc71;
+}
+.red{
+    color:#e74c3c;
+}
+
+.note p, .grade p{
+    font-size: 1rem;
+}
+
+.protocol_table table{
+    width: 100%;
+    border-collapse:collapse;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+.protocol_table table td{
+    padding: 0 10px;
+    line-height: 30px;
+}
+
+
+/*cipher suite*/
+.ciphersuite_protocol{
+    background-color: #ddd;
+    padding: .3em;
+}
+/*
+.ciphersuite_protocol span{
+    display: inline;
+    background-color: #777777;
+    color:#fff;
+    font-size: 0.75em;
+    margin-top:-4px;
+    border-radius: .25em;
+    padding: .3em;
+}
+*/
+.ciphersuite tr{
+    text-align: center;
+}
+
+/* Cookie */
+
+.cookie_table{
+    width: 100%;
+}
+.cookie_table th{
+    text-align: center;
+}
+.td_third_party, .td_cookie_score{
+    text-align: center;
+}
+/* Web Beacon*/
+.webbeacon{
+    padding: 0.4em;
+    border-radius: 0.75em;
+    background-color: #f8f8f8;
+    margin-bottom: 2rem;
+
+     /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+.webbeacon span{
+    font-weight: 800;
+}
+.webbeacon_target{
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 800;
+}
+
+.caption{
+    margin-top: 2rem;
+    font-size: 0.8em;
+    text-align: justify;
+}
+.caption span{
+    font-weight: 800;
+}
+
+
+/* COLOR */
+.green{
+    color:#2ecc71;
+}
+.orange{
+    color:#ff9f43;
+}
+.red{
+    color:#e74c3c;
+}
+.bg_green{
+    background-color:#2ecc71 !important;
+}
+.bg_red{
+    background-color:#e74c3c !important;
+}
+
+.default_color{
+    color:#2c3e50 !important;
+}
+
+.green_a{
+    color: #2ecc71;
+}
+.green_a_bg{
+    background-color: #2ecc71;
+}
+
+.green_b{
+    color: #27ae60;
+}
+.green_b_bg{
+    background-color: #27ae60;
+}
+
+.orange_c{
+    color: #e67e22;
+}
+.orange_c_bg{
+    background-color: #e67e22;
+}
+
+.red_d{
+    color: #e74c3c;
+}
+.red_d_bg{
+    background-color: #e74c3c;
+}
+
+.red_e{
+    color: #c0392b;
+}
+.red_e_bg{
+    background-color: #c0392b;
+}
+
+.black_f{
+    color: #000;
+}
+.black_f_bg{
+    background-color: #000;
+}
+
+
+/* TABLE */
+table {border-collapse: collapse;}
+table, tr, td {
+    border: none;
+}
+th{
+    color:#fff;;
+    background:#6f77aa;
+    text-align:center;
+}
+
+tr:nth-child(2n+1) td {
+    background:#EBEBEB;
+}
+td {
+    padding: 0.5em;
+    background:#FFFFFF;
+}
+
+.ciphersuite:nth-child(4n-1) td {
+    background: #EBEBEB ;
+}
+.ciphersuite:nth-child(4n+1) td {
+    background: #fff ;
+}
+.protocol_cs td{
+    background-color: #858ECC !important;
+    color: #fff;
+}
+.ciphersuite_table{
+    width: 100%;
+}
+.ciphersuite_table th{
+    padding: 0.5em 0;
+    font-weight: 800;
+}

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        @page {
+            @bottom-center{
+                content: "Generate only for personal purpose. Do not publish this report. Generated for {{client_name}}.";
+                font-size: 10px;
+
+            }
+        }
+        @page{ background: rgb(253, 253, 255) } /* Third page */
+        @font-face {
+            font-family: Montserrat-Regular;
+            src: url(modules/report/templates/Montserrat-Regular.ttf);
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <h1>gdpr-analyzer</h1>
+        <div class="header_report">.report</div>
+        <div class="header_target">{{target}}</div>
+        <div class="header_date">{{generated_date}}</div>
+        <div class="header_score">Score:
+            <span {% if "A" == grade %}class="green_a_bg" {% elif "B" == grade %}class="green_b_bg" 
+            {% elif "C" == grade %}class="orange_c_bg" {% elif "D" == grade %}class="red_d_bg" 
+            {% elif "E" == grade %}class="red_e_bg" {% elif "F" == grade %}class="black_f_bg"{% endif %}>{{grade}}</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col section section_cookie {% if cookies|length < 1 %}notanalyzed{% endif %}">
+                <div class="section_title">Cookie</div>
+                <div class="section_note section_grade">
+                    <span class="section_note_title">Grade</span>
+                    {% if cookies|length %}<span class="section_note_data {% if "A" == cookies.grade %}green_a 
+                    {% elif "B" == cookies.grade %}green_b {% elif "C" == cookies.grade %}range_c 
+                    {% elif "D" == cookies.grade %}red_d {% elif "E" == cookies.grade %}red_e 
+                    {% elif "F" == cookies.grade %}black_f {% endif %}">
+                    {{cookies.grade}}</span>{% endif %}
+                </div>
+                <div class="section_note section_score">
+                    <span class="section_note_title">Score</span>
+                    <span class="section_note_data">{% if cookies|length %}{{cookies.score}}{% endif %}</span>
+                </div>
+            </div>
+            <div class="col section section_webbeacon {% if wbMod|length < 1 %}notanalyzed{% endif %}">
+                <div class="section_title">Web beacon</div>
+                <div class="section_note section_grade">
+                    <span class="section_note_title">Grade</span>
+                    {% if wbMod|length %}<span class="section_note_data {% if "A" == wbMod.grade %}green_a 
+                    {% elif "B" == wbMod.grade %}green_b {% elif "C" == wbMod.grade %}range_c 
+                    {% elif "D" == wbMod.grade %}red_d {% elif "E" == wbMod.grade %}red_e 
+                    {% elif "F" == wbMod.grade %}black_f {% endif %}">
+                    {{wbMod.grade}}</span>{% endif %}
+                </div>
+                <div class="section_note section_score">
+                    <span class="section_note_title">Score</span>
+                    <span class="section_note_data">{% if wbMod|length %}{{wbMod.score}}{% endif %}</span>
+                </div>
+            </div>
+            <div class="col section section_crypto {% if scMod|length < 1 %}notanalyzed{% endif %}">
+                <div class="section_title">Transmission security</div>
+                <div class="section_note section_grade">
+                    <span class="section_note_title">Grade</span>
+                    {% if scMod|length %}<span class="section_note_data {% if "A" == scMod.grade %}green_a 
+                    {% elif "B" == scMod.grade %}green_b {% elif "C" == scMod.grade %}range_c 
+                    {% elif "D" == scMod.grade %}red_d {% elif "E" == scMod.grade %}red_e 
+                    {% elif "F" == scMod.grade %}black_f {% endif %}">
+                    {{scMod.grade}}</span>{% endif %}
+                </div>
+                <div class="section_note section_score">
+                    <span class="section_note_title">Score</span>
+                    <span class="section_note_data">{% if scMod|length %}{{scMod.note}}{% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% if cookies|length %}
+    <div class="jump landscape">
+        <h2>Cookies</h2>
+        <div class="description">
+            <p>
+                In this section, we analyze the cookies placed on your computer when you visit a webpage.
+                The score is calculated by considering the lifetime of each of them but also the fact that they are
+                third-party cookies or not. A grade from A to F is defined according to the score obtained.
+            </p>
+        </div>
+        <div class="flex-container">
+            <div class="grade">
+                <p>Grade</p>
+                <div class="bd-callout 
+                {% if "A" == cookies.grade %}green_a_bg {% elif "B" == cookies.grade %}green_b_bg 
+                {% elif "C" == cookies.grade %}range_c_bg {% elif "D" == cookies.grade %}red_d_bg
+                {% elif "E" == cookies.grade %}red_e_bg {% elif "F" == cookies.grade %}black_f_bg {% endif %}" >
+                    {{cookies.grade}}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Score</p>
+                <div class="bd-callout default_color">
+                    {{cookies.score}}
+                </div>
+            </div>
+        </div>
+
+        <h3>Cookie Details</h3>
+        {% if cookies.details|length %}
+            <table class="cookie_table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Domain</th>
+                        <th>Third Party</th>
+                        <th>Http Only</th>
+                        <th>Secure</th>
+                        <th>Expiry</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+
+                {% for cookie_name, details in cookies.details.items() %}
+                    <tr>
+                        <td>{{cookie_name}}</td>
+                        <td>{{details.domain}}</td>
+                        <td class="td_third_party">{{details.third_party}}</td>
+                        <td>{{details.isHttpOnly}}</td>
+                        <td>{{details.isSecure}}</td>
+                        <td>{{details.expiry}}</td>
+                        <td class="td_cookie_score">{{details.cookie_score}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Well, no cookie detected</p>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    {% if wbMod|length %}
+    <div class="jump">
+        <h2> Web beacons </h2>
+        <div class="description">
+            <p>
+                In this part, we analyze the web beacons. These are small images found on some web pages that can be used
+                to alert other websites to your presence. The score is calculated by taking into account the criteria
+                for detecting a potential web beacon. These criteria are their presence in a black list, their small
+                size, their position on the web page or the fact that they are voluntarily hidden. A grade from A to F
+                is defined according to the score obtained.
+            </p>
+        </div>
+        <div class="flex-container">
+            <div class="grade">
+                <p>Grade</p>
+                <div class="bd-callout 
+                {% if "A" == wbMod.grade %}green_a_bg {% elif "B" == wbMod.grade %}green_b_bg 
+                {% elif "C" == wbMod.grade %}range_c_bg {% elif "D" == wbMod.grade %}red_d_bg
+                {% elif "E" == wbMod.grade %}red_e_bg {% elif "F" == wbMod.grade %}black_f_bg {% endif %}" >
+                    {{wbMod.grade}}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Score</p>
+                <div class="bd-callout default_color">
+                    {{wbMod.score}}
+                </div>
+            </div>
+        </div>
+
+        <div class="container protocol">
+            <div class="row">
+                <div class="col protocol_table">
+                    <h3> Details </h3>
+                    {% if wbMod.url|length %}
+                        <div class="webbeacons">
+                            {% for url in wbMod.url %}
+                                <div class="webbeacon">
+                                    <p class="webbeacon_target">{{url.target}}</p>
+                                    <p><span>Url : </span>{{url.url}}</p>
+                                    <p class="fault">Characteristics :
+                                        {% if url.position == True %}<span>position</span>{% endif %}
+                                        {% if url.hidden == True %}<span>hidden</span>{% endif %}
+                                        {% if url.size == True %}<span>size</span>{% endif %}
+                                        {% if url.blacklist == True %}<span>blacklist</span>{% endif %}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="caption">
+                            <p><span>Size : </span> The size of the image is to small to be watch by the user (minus 3 pixels), there's a high probability that it's a web beacon</p>
+                            <p><span>Position : </span> The picture is placed outside the field (in the left and top negatives), there's a high probability that it's a web beacon beacause it's uncommon for a developer to use this kind of practice to insert a legitimate image</p>
+                            <p><span>Hidden : </span> The style of the beacon is set to hide the content of the image, there's a high probability that it's a web beacon.</p>
+                            <p><span>Blacklist : </span> The source of the beacon is blacklisted in Host-block file from https://sebsauvage.net/hosts/hosts</p>
+                        </div>
+                    {% else %}
+                        <p>Well, no web beacon detected</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if scMod|length %}
+    <div class="jump">
+        <h2>Security transmission</h2>
+        <div class="description">
+            <p>
+                In this section, we analyze the quality of the security transmission between your computer and the
+                server when you visit a webpage. The score is calculated by considering the protocols used, their
+                version and the quality of the encryption key. A grade from A to F is defined according to the score
+                obtained.
+            </p>
+        </div>
+        <div class="flex-container">
+            <div class="grade">
+                <p>Grade</p>
+                <div class="bd-callout 
+                {% if "A" == scMod.grade %}green_a_bg {% elif "B" == scMod.grade %}green_b_bg 
+                {% elif "C" == scMod.grade %}range_c_bg {% elif "D" == scMod.grade %}red_d_bg
+                {% elif "E" == scMod.grade %}red_e_bg {% elif "F" == scMod.grade %}black_f_bg {% endif %}" >
+                    {{scMod.grade}}
+                </div>
+            </div>
+            
+            <div class="note">
+                <p>Score</p>
+                <div class="bd-callout default_color">
+                    {{scMod.note}}
+                </div>
+            </div>
+        </div>
+
+        <h3>Enabled SSL/TLS protocol versions</h3>
+        <div class="score_part">
+            Score: {{scMod.protocol.score}}</br>
+        </div>
+        
+        <div class="container protocol">
+            <div class="row">
+                <div class="col protocol_table">
+                    <table>
+                        {% for protocol, state in scMod.protocol.items()|sort(case_sensitive = False) %}
+                            {% if protocol != 'score' %}
+                            <tr>
+                                <td>{{protocol}}</td>
+                                <td
+                                    {% if protocol == 'SSLv2' and state == 'NO'%} class="green"{% endif %}
+                                    {% if protocol == 'SSLv2' and state == 'YES'%} class="red"{% endif %}
+                                    {% if protocol == 'SSLv3' and state == 'NO'%} class="green"{% endif %}
+                                    {% if protocol == 'SSLv3' and state == 'YES'%} class="red"{% endif %}
+                                    {% if protocol == 'TLSv1_2' and state == 'YES'%} class="green"{% endif %}
+                                    {% if protocol == 'TLSv1_2' and state == 'NO'%} class="red"{% endif %}
+                                    {% if protocol == 'TLSv1_3' and state == 'YES'%}class="green"{% endif %}
+                                    {% if protocol == 'TLSv1_3' and state == 'NO'%}class="red"{% endif %}
+                                    >{{state}}</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <h3>Certificate</h3>
+        <div class="score_part">
+            Score: {{scMod.certificate.score}}</br>
+        </div>
+        
+        <div class="container certificate">
+            <div class="row">
+                <div class="col protocol_table">
+                    <table>
+                        <tr>
+                            <td>Issued to</td>
+                            <td>{{scMod.certificate.issued_to}}</td>
+                        </tr>
+                        <tr>
+                            <td>Issued by</td>
+                            <td>{{scMod.certificate.issued_by}}</td>
+                        </tr>
+                        <tr>
+                            <td>Extended Validation</td>
+                            <td {% if scMod.certificate.type == 'extended-validation'%} class="green"> YES {% else %}> NO {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Signature algorithml</td>
+                            <td>{{scMod.certificate.sign_algo}}</td>
+                        </tr>
+                        <tr>
+                            <td>Valid from</td>
+                            <td>{{scMod.certificate.not_before}}</td>
+                        </tr>
+                        <tr>
+                            <td>Valid until</td>
+                            <td>{{scMod.certificate.not_after}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <h3> Quality of Key </h3>
+        <div class="score_part">
+            Score: {{scMod.key.score}}</br>
+        </div>
+       
+        Size: {{scMod.key.size}}</br>
+        Type: {{scMod.key.type}}
+
+        <div class="landscape">
+            <h3> Cipher details </h3>
+            <div class="score_part">
+                Score: {{scMod.cipher.score}}
+            </div>
+           
+
+            <table class="ciphersuite_table">
+                <thead>
+				    <tr>
+                        <th rowspan="2">Name</th>
+					    <th rowspan="2">Key Exchange</th>
+					    <th rowspan="2">Auth.</th>
+					    <th colspan="3">Cipher</th>
+					    <th colspan="2">MAC</th>
+				    </tr>
+				    <tr>
+					    <th>Type</th>
+					    <th>Key size</th>
+					    <th>Mode</th>
+					    <th>Type</th>
+					    <th>Size</th>
+				    </tr>
+			    </thead>
+
+
+                {% for protocol in scMod.cipher|sort(case_sensitive = False) %}
+                {% if protocol != 'score' %}
+                <tr class="ciphersuite protocol_cs">
+                    <td colspan="8">{{protocol}}</td>
+                <tr>
+
+                {% for cipherSuite in scMod.cipher[protocol] %}
+                {% for cipher, info in cipherSuite.items() %}
+                <tr class="ciphersuite">
+                    <td {% if info.security == 'insecure'%} class="red"{% endif %}
+                        {% if info.security == 'weak'%} class="orange"{% endif %}
+                        {% if info.security == 'recommended'%} class="green"{% endif %}
+                    >{{cipher}}</td>
+                    <td class="text_center">{{info.key_exch_protocol}}</td>
+                    <td class="text_center">{{info.auth_protocol}}</td>
+                    <td class="text_center">{{info.cipher_type}}</td>
+                    <td class="text_center">{{info.cipher_key_size}}</td>
+                    <td class="text_center">{{info.cipher_mode}}</td>
+                    <td class="text_center">{{info.mac_type}}</td>
+                    <td class="text_center">{{info.mac_size}}</td>
+                <tr>
+                {% endfor %}
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>
