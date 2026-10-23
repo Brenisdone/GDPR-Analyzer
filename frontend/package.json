@@ -7,7 +7,7 @@
     "db": "cd .. && docker compose up -d --wait",
     "backend": "npm run db && cd .. && python -m uvicorn api.main:app --reload",
     "frontend": "vite",
-    "dev": "concurrently -k -n BACKEND,FRONTEND \"npm run backend\" \"npm run frontend\"",
+    "dev": "concurrently -n BACKEND,FRONTEND \"npm run backend\" \"npm run frontend\"",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview"

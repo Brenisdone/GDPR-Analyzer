@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 import {
   Activity,
   AlertCircle,
@@ -203,6 +204,8 @@ function AssessmentDetails({ result }) {
       </p>
     </div>
   );
+
+  const [backendStatus, setBackendStatus] = useState("checking");
 
   return (
     <div className="space-y-5">
@@ -451,20 +454,52 @@ function App() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+    let retryTimer;
+
     async function initialize() {
+      // Step 1: Wait until FastAPI is responding.
       try {
         await apiRequest("/api/health");
-        setApiOnline(true);
-        await loadHistory();
-      } catch {
+      } catch (error) {
+        if (cancelled) return;
+
         setApiOnline(false);
-        setError(
-          "Could not connect to the API. Make sure FastAPI is running on port 8000."
-        );
+        setError("Backend is starting. Retrying automatically...");
+
+        console.error("[Backend] Not available yet:", error);
+
+        // Retry the health check after 1.5 seconds.
+        retryTimer = window.setTimeout(initialize, 1500);
+        return;
+      }
+
+      if (cancelled) return;
+
+      // Step 2: Backend is ready.
+      setApiOnline(true);
+      setError("");
+
+      console.log("[Backend] Connected successfully.");
+
+      // Step 3: Load scan history only after the backend is ready.
+      try {
+        await loadHistory();
+      } catch (error) {
+        if (cancelled) return;
+
+        console.error("[Frontend] Failed to load scan history:", error);
+        setError("Connected to the backend, but failed to load scan history.");
       }
     }
 
     initialize();
+
+    // Cleanup when the component unmounts or the effect reruns.
+    return () => {
+      cancelled = true;
+      window.clearTimeout(retryTimer);
+    };
   }, [loadHistory]);
 
   async function handleScan(event) {
