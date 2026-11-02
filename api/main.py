@@ -1,3 +1,6 @@
+import sys
+sys.stdout.reconfigure(line_buffering=True)
+
 import logging
 import json
 import os
