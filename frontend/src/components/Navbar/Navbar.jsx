@@ -8,11 +8,14 @@ const tabs = [
 export default function Navbar({ activeView, onChange }) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-white/[0.07] bg-[#0b1120]/95 px-4 backdrop-blur sm:px-6">
-      <div className="flex items-center gap-2.5">
-        <div className="rounded-lg bg-cyan-400/10 p-1.5 text-cyan-300">
-          <ShieldCheck size={20} />
+      <div className="flex items-center gap-3">
+        <div className="rounded-xl bg-cyan-400/10 p-2.5 text-cyan-300">
+          <ShieldCheck size={25} />
         </div>
-        <span className="font-semibold tracking-tight">PrivacyLens</span>
+        <div>
+          <h1 className="font-semibold tracking-tight">PrivacyLens</h1>
+          <p className="text-xs text-slate-500">GDPR Analyzer</p>
+        </div>
       </div>
 
       <nav aria-label="Main navigation" className="flex items-center gap-1">

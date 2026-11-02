@@ -141,17 +141,8 @@ export default function Workspace() {
   return (
     <>
       <aside className="fixed bottom-0 left-0 top-14 z-20 hidden w-64 border-r border-white/[0.07] bg-[#0b1120] p-6 md:flex md:flex-col">
-        <div className="flex items-center gap-3">
-          <div className="rounded-xl bg-cyan-400/10 p-2.5 text-cyan-300">
-            <ShieldCheck size={25} />
-          </div>
-          <div>
-            <h1 className="font-semibold tracking-tight">PrivacyLens</h1>
-            <p className="text-xs text-slate-500">GDPR Analyzer</p>
-          </div>
-        </div>
 
-        <p className="mb-3 mt-12 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-600">
+        <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-600">
           Workspace
         </p>
 
