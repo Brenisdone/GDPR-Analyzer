@@ -304,15 +304,15 @@ export default function Workspace() {
                 </div>
 
                 <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
-                  <p className="text-xs text-slate-500">Analysis modules</p>
+                  <p className="text-xs text-slate-500">Modules returned</p>
                   <p className="mt-3 text-3xl font-semibold">{modules.length || "—"}</p>
                   <p className="mt-2 text-xs text-slate-500">Modules exposing a grade or score</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/[0.07] bg-white/[0.025] p-5">
-                  <p className="text-xs text-slate-500">Recorded findings</p>
+                  <p className="text-xs text-slate-500">Potential beacon URLs</p>
                   <p className="mt-3 text-3xl font-semibold">{scan ? findings.length : "—"}</p>
-                  <p className="mt-2 text-xs text-slate-500">Items available in structured output</p>
+                  <p className="mt-2 text-xs text-slate-500">Image URLs matched by beacon checks</p>
                 </div>
               </section>
 

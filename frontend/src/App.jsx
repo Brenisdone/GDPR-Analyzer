@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar";
 import Workspace from "./pages/Workspace";
 import Documentation from "./pages/Documentation";
 
